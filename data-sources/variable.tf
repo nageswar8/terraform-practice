@@ -14,7 +14,7 @@ variable "domain_name" {
 
 variable "val" {
 
-  default = 10
+  default = 1
 
 }
 

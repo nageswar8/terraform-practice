@@ -1,6 +1,11 @@
 variable "instances" {
-  type    = list(string)
-  default = ["mongo", "mysql", "redis", "rabbitmq", "catalogue", "user", "cart", "shipping", "payment", "frontend"]
+  type = map(string)
+  default = {
+    mongo    = "t2.micro",
+    mysql    = "t2.micro",
+    redis    = "t2.micro",
+    rabbitmq = "t2.micro",
+  }
 }
 
 

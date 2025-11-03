@@ -1,7 +1,7 @@
 resource "aws_instance" "terraform-demo" {
-  ami                    = "ami-09c813fb71547fc4f"
+  ami                    = data.aws_ami.join-dev.id
   instance_type          = "t2.micro"
-  count                  = var.val
+  count                  = length(var.instances)
   vpc_security_group_ids = [aws_security_group.allow_all_terraform.id]
 
 

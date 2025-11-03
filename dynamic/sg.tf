@@ -1,16 +1,3 @@
-resource "aws_instance" "terraform-demo" {
-  ami                    = "ami-09c813fb71547fc4f"
-  instance_type          = "t2.micro"
-  count                  = var.val
-  vpc_security_group_ids = [aws_security_group.allow_all_terraform.id]
-
-
-  tags = {
-    Name = var.instances[count.index]
-
-  }
-}
-
 resource "aws_security_group" "allow_all_terraform" {
   name        = "allow_all_terraform"
   description = "Allow all inbound traffic and all outbound traffic"
@@ -31,7 +18,11 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_all_traffic" {
   security_group_id = aws_security_group.allow_all_terraform.id
+  count             = length(var.ingress_port)
   cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1" # semantically equivalent to all ports
+  from_port         = var.ingress_port[count.index]
+  to_port           = var.ingress_port[count.index]
+  ip_protocol       = "tcp" # semantically equivalent to all ports
 }
+
 
